@@ -19,6 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.4
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -27,19 +32,13 @@ jobs:
       - name: Install Dependencies
         run: |
           composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-          npm install
+          bun install
 
-      - name: Run Pint
-        run: vendor/bin/pint
+      - name: Run Pint check
+        run: vendor/bin/pint --test
 
-      - name: Format Frontend
-        run: npm run format
+      - name: Format check Frontend
+        run: bun run format:check
 
       - name: Lint Frontend
-        run: npm run lint
-
-      # - name: Commit Changes
-      #   uses: stefanzweifel/git-auto-commit-action@v5
-      #   with:
-      #     commit_message: fix code style
-      #     commit_options: '--no-verify'
+        run: bun run lint
