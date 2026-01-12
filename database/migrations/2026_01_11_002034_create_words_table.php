@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('words', function (Blueprint $table) {
             $table->id();
             $table->string('value');
-            $table->unsignedMediumInteger('length');
+            $table->unsignedMediumInteger('length')->index();
             $table->timestamps();
         });
     }
