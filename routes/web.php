@@ -3,7 +3,9 @@
 use App\Http\Controllers\InertiaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [InertiaController::class, 'home']);
+Route::controller(InertiaController::class)->group(function () {
+    Route::get('/', 'home');
 
-Route::get('/anagram/find', [InertiaController::class, 'anagramFind']);
-Route::get('/anagram/import', [InertiaController::class, 'anagramImport']);
+    Route::get('/anagram/find', 'anagramFind');
+    Route::get('/anagram/import', 'anagramImport');
+});
