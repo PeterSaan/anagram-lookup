@@ -20,11 +20,11 @@ class WordController extends Controller
         $isImported = $wordService->importToDb($words);
 
         if (! $isImported) {
-            return response('Problem with importing the dataset', 500);
+            return response('Problem with importing the words', 500);
         }
 
         Cache::set('imported', true);
 
-        return response('Data has been imported sucessfully', 201);
+        return response('Words have been imported sucessfully', 201);
     }
 }
