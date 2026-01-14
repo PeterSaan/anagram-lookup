@@ -8,6 +8,27 @@ use Illuminate\Support\Facades\Http;
 
 class WordController extends Controller
 {
+    public function find(WordService $wordService, string $word)
+    {
+        $word = trim($word);
+        if (empty($word)) {
+            return response([], 400);
+        }
+
+        $anagramsFromCache = Cache::get($word, '');
+        if ($anagramsFromCache != '') {
+            return response($anagramsFromCache, 200);
+        }
+
+        $anagrams = $wordService->findAnagrams($word);
+
+        Cache::set($word, $anagrams);
+
+        $resCode = empty($anagrams) ? 204 : 201;
+
+        return response($anagrams, $resCode);
+    }
+
     public function import(WordService $wordService)
     {
         if (Cache::get('imported', false)) {
@@ -18,7 +39,6 @@ class WordController extends Controller
         $words = explode("\n", $res->body());
 
         $isImported = $wordService->importToDb($words);
-
         if (! $isImported) {
             return response('Problem with importing the words', 500);
         }

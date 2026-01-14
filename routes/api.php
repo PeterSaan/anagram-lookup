@@ -5,4 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => 'Hello world!');
 
-Route::post('/import-words', [WordController::class, 'import']);
+Route::controller(WordController::class)->group(function () {
+    Route::get('/find-anagrams/{word}', 'find');
+    Route::post('/import-words', 'import');
+});
