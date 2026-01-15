@@ -22,9 +22,11 @@ class WordController extends Controller
 
         $anagrams = $wordService->findAnagrams($word);
 
-        Cache::set($word, $anagrams);
-
-        $resCode = empty($anagrams) ? 204 : 201;
+        $resCode = 204;
+        if (! empty($anagrams)) {
+            $resCode = 201;
+            Cache::set($word, $anagrams);
+        }
 
         return response($anagrams, $resCode);
     }
