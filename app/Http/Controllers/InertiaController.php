@@ -14,7 +14,9 @@ class InertiaController extends Controller
 
     public function anagramFind()
     {
-        return Inertia::render('anagram/find');
+        $isImported = Cache::get('imported', false);
+
+        return Inertia::render('anagram/find', ['isImported' => $isImported]);
     }
 
     public function anagramImport()
