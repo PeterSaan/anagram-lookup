@@ -35,14 +35,19 @@ class WordController extends Controller
             return response('Words have already been imported', 200);
         }
 
+        Cache::set('importing', true);
+
         $res = Http::get('https://opus.ee/lemmad2013.txt');
         $words = explode("\n", $res->body());
 
         $isImported = $wordService->importToDb($words);
         if (! $isImported) {
+            Cache::delete('importing');
+
             return response('Problem with importing the words', 500);
         }
 
+        Cache::delete('importing');
         Cache::set('imported', true);
 
         return response('Words have been imported sucessfully', 201);

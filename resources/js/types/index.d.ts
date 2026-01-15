@@ -1,1 +1,1 @@
-export type ImportPageProps = { isImported: boolean };
+export type ImportPageProps = { isImported: boolean; isImporting: boolean };
