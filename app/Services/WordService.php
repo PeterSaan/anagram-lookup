@@ -28,7 +28,7 @@ class WordService
     /**
      * @param  string[]  $words
      */
-    public function importToDb(array $words): bool
+    public function importToDb(array $words)
     {
         foreach ($words as $word) {
             $wordModel = new Word;
@@ -36,7 +36,5 @@ class WordService
             $wordModel->length = strlen($word);
             $wordModel->save();
         }
-
-        return true;
     }
 }

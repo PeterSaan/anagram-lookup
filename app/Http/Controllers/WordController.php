@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Services\WordService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class WordController extends Controller
 {
@@ -31,27 +33,31 @@ class WordController extends Controller
         return response($anagrams, $resCode);
     }
 
-    public function import(WordService $wordService)
+    public function import(WordService $wordService, Request $req)
     {
-        if (Cache::get('imported', false)) {
+        $importUrl = $req->input('url');
+        if (! filter_var($importUrl, FILTER_VALIDATE_URL)) {
+            return response('Empty or invalid URL', 400);
+        }
+
+        if (Cache::get('imported')) {
             return response('Words have already been imported', 200);
         }
 
-        Cache::set('importing', true);
-
-        $res = Http::get('https://opus.ee/lemmad2013.txt');
-        $words = explode("\n", $res->body());
-
-        $isImported = $wordService->importToDb($words);
-        if (! $isImported) {
-            Cache::delete('importing');
-
-            return response('Problem with importing the words', 500);
+        try {
+            $res = Http::get($importUrl);
+        } catch (Throwable $th) {
+            return response($th->getMessage(), 400);
         }
 
+        $words = explode("\n", $res->body());
+
+        Cache::set('importing', true);
+        $wordService->importToDb($words);
         Cache::delete('importing');
+
         Cache::set('imported', true);
 
-        return response('Words have been imported sucessfully', 201);
+        return response('Words have been imported sucessfully!', 201);
     }
 }
