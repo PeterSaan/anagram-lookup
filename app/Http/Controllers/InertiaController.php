@@ -21,9 +21,8 @@ class InertiaController extends Controller
 
     public function anagramImport()
     {
-        $isImporting = Cache::get('importing', false);
         $isImported = Cache::get('imported', false);
 
-        return Inertia::render('anagram/import', ['isImporting' => $isImporting, 'isImported' => $isImported]);
+        return Inertia::render('anagram/import', ['isImported' => $isImported]);
     }
 }
