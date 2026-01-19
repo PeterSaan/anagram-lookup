@@ -1,0 +1,182 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "anagram-lookup",
+        "description": "API documentation for anagram-lookup",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/job/batch-progress/{id}": {
+            "get": {
+                "tags": [
+                    "job"
+                ],
+                "summary": "Get the progress of a batch by its uuid",
+                "operationId": "17d7100876e25e492283a769a2f8733b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of a batch of jobs",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "b690bd00-819d-4d18-9151-25ed11b96b83"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Batch progress successfully retrieved",
+                        "content": {
+                            "text/html": {
+                                "example": "50%"
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Batch has finished",
+                        "content": {
+                            "text/html": {
+                                "example": "Batch b690bd00-819d-4d18-9151-25ed11b96b83 finished"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Batch with the given uuid was not found or the given paramater was not of type UUID",
+                        "content": {
+                            "text/html": {
+                                "example": "Batch b690bd00-819d-4d18-9151-25ed11b96b83 not found"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/find-anagrams/{word}": {
+            "get": {
+                "tags": [
+                    "word"
+                ],
+                "summary": "Get array of anagrams for the given word",
+                "operationId": "2e159fd4eb2a7d96f2089043675e8826",
+                "parameters": [
+                    {
+                        "name": "word",
+                        "in": "path",
+                        "description": "Word to search anagrams for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Found anagrams from the cache",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    "anagram",
+                                    "nagaram",
+                                    "managra"
+                                ]
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Found anagrams and cached them",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    "anagram",
+                                    "nagaram",
+                                    "managra"
+                                ]
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Did not find anagrams for given word",
+                        "content": {
+                            "application/json": {
+                                "example": []
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "`word` is empty",
+                        "content": {
+                            "application/json": {
+                                "example": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/import-words": {
+            "post": {
+                "tags": [
+                    "word"
+                ],
+                "summary": "Import words separated by newlines from a given URL",
+                "operationId": "dba931c3b49ee57b3fc913ec038f686d",
+                "requestBody": {
+                    "description": "Object with a single key `url` that holds the full URL. A GET request is made to the provided path",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "url": "https://opus.ee/lemmad2013.txt"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Words have already imported from some URL",
+                        "content": {
+                            "text/html": {
+                                "example": "Words have already been imported"
+                            }
+                        }
+                    },
+                    "202": {
+                        "description": "Import jobs passed to the server, batch id returned",
+                        "content": {
+                            "text/html": {
+                                "example": "b690bd00-819d-4d18-9151-25ed11b96b83"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid URL or HTTP client had problems fetching the requested URL",
+                        "content": {
+                            "text/html": {
+                                "example": []
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error creating a batch of jobs",
+                        "content": {
+                            "text/html": {}
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "job",
+            "description": "job"
+        },
+        {
+            "name": "word",
+            "description": "word"
+        }
+    ]
+}
