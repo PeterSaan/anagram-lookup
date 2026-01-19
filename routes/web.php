@@ -8,4 +8,6 @@ Route::controller(InertiaController::class)->group(function () {
 
     Route::get('/anagram/find', 'anagramFind');
     Route::get('/anagram/import', 'anagramImport');
+
+    Route::get('/docs/api', 'docsApi');
 });

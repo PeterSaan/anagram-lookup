@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => 'Hello world!');
 
+Route::get('/docs', fn () => response()->file('../docs/openapi.json'));
+
 Route::controller(WordController::class)->group(function () {
     Route::get('/find-anagrams/{word}', 'find');
     Route::post('/import-words', 'import');
