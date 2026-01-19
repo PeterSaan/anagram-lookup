@@ -25,4 +25,9 @@ class InertiaController extends Controller
 
         return Inertia::render('anagram/import', ['isImported' => $isImported]);
     }
+
+    public function docsApi()
+    {
+        return Inertia::render('docs/api');
+    }
 }
