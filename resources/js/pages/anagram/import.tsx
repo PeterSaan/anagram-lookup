@@ -1,36 +1,61 @@
 import { ImportPageProps } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
-export default function Import({ isImported, isImporting }: ImportPageProps) {
-  const initialStatusText = isImporting
+export default function Import({ isImported }: ImportPageProps) {
+  const [batchId, setBatchId] = useState(localStorage.getItem('batchId'));
+  const [isInputDisabled, setIsInputDisabled] = useState(
+    isImported || batchId !== null,
+  );
+  const [importUrl, setImportUrl] = useState('');
+  const initialStatusText = batchId
     ? 'Importing...'
     : isImported
       ? 'Words have already been imported'
       : 'Enter a URL to import from';
-
-  const [isBtnDisabled, setIsBtnDisabled] = useState(isImported || isImporting);
   const [importResponse, setImportResponse] = useState(initialStatusText);
-  const [importUrl, setImportUrl] = useState('');
+
+  useEffect(() => {
+    if (!batchId) return;
+
+    const interval = setInterval(async () => {
+      const res = await fetch(`/api/job/batch-progress/${batchId}`);
+
+      if (res.status === 201) {
+        setImportResponse('Import finished!');
+        localStorage.removeItem('batchId');
+        clearInterval(interval);
+        return;
+      }
+
+      setImportResponse(`Import progress: ${await res.text()}`);
+    }, 3000);
+  }, [batchId]);
 
   async function importWords(e: FormEvent) {
     e.preventDefault();
-    setIsBtnDisabled(true);
+    setIsInputDisabled(true);
     setImportResponse('Importing...');
 
-    const res = await fetch(`/api/import-words`, {
+    const res = await fetch('/api/import-words', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url: importUrl }),
     });
 
+    const resText = await res.text();
+
     if (!res.ok) {
-      setIsBtnDisabled(false);
-      setImportResponse(await res.text());
+      setIsInputDisabled(false);
+      setImportResponse(resText);
+      return;
+    } else if (res.status === 202) {
+      localStorage.setItem('batchId', resText);
+      setBatchId(resText);
       return;
     }
 
-    setImportResponse(await res.text());
+    setImportResponse(resText);
   }
 
   return (
@@ -51,15 +76,17 @@ export default function Import({ isImported, isImporting }: ImportPageProps) {
                 Full URL:
                 <input
                   className="rounded-full border border-gray-50 px-3 py-2 text-gray-100"
+                  name="url"
                   type="url"
                   onChange={(e) => setImportUrl(e.target.value)}
                   required
+                  disabled={isInputDisabled}
                 />
               </label>
               <button
                 className="mx-auto cursor-pointer rounded-2xl border-2 border-gray-100 px-5 py-3 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75 disabled:cursor-not-allowed disabled:border-transparent disabled:bg-gray-500 disabled:text-gray-100/60"
                 type="submit"
-                disabled={isBtnDisabled}
+                disabled={isInputDisabled}
               >
                 Import
               </button>
