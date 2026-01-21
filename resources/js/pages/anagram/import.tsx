@@ -20,15 +20,21 @@ export default function Import({ isImported }: ImportPageProps) {
 
     const interval = setInterval(async () => {
       const res = await fetch(`/api/job/batch-progress/${batchId}`);
+      const resText = await res.text();
 
-      if (res.status === 201) {
+      if (!res.ok) {
+        setImportResponse(resText);
+        localStorage.removeItem('batchId');
+        clearInterval(interval);
+        return;
+      } else if (res.status === 201) {
         setImportResponse('Import finished!');
         localStorage.removeItem('batchId');
         clearInterval(interval);
         return;
       }
 
-      setImportResponse(`Import progress: ${await res.text()}`);
+      setImportResponse(`Import progress: ${resText}`);
     }, 3000);
   }, [batchId]);
 
