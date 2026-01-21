@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\WordService;
+use App\Interfaces\IWordService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
@@ -12,6 +12,8 @@ use Throwable;
 
 class WordController extends Controller
 {
+    public function __construct(public IWordService $wordService) {}
+
     #[OA\Get(
         path: '/api/find-anagrams/{word}',
         summary: 'Get array of anagrams for the given word',
@@ -58,7 +60,7 @@ class WordController extends Controller
             ),
         ]
     )]
-    public function find(WordService $wordService, string $word)
+    public function find(string $word)
     {
         if (! $word) {
             return response([], 400);
@@ -69,7 +71,7 @@ class WordController extends Controller
             return response($anagramsFromCache, 200);
         }
 
-        $anagrams = $wordService->findAnagrams($word);
+        $anagrams = $this->wordService->findAnagrams($word);
 
         $resCode = 204;
         if (! empty($anagrams)) {
@@ -124,7 +126,7 @@ class WordController extends Controller
             ),
         ]
     )]
-    public function import(Request $req, WordService $wordService)
+    public function import(Request $req)
     {
         if (Cache::get('imported')) {
             return response('Words have already been imported');
@@ -143,8 +145,7 @@ class WordController extends Controller
 
         $words = explode("\n", $res->body());
 
-        $jobsInBatch = 10;
-        $jobs = $wordService->arrayToJobs($words, $jobsInBatch);
+        $jobs = $this->wordService->wordArrayToJobs($words);
 
         try {
             $batchId = Bus::batch($jobs)

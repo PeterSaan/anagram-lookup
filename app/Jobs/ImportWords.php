@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\WordService;
+use App\Interfaces\IWordService;
 use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -23,7 +23,7 @@ class ImportWords implements ShouldQueue
      *
      * @param  string[]  $words
      */
-    public function handle(WordService $wordService): void
+    public function handle(IWordService $wordService): void
     {
         $wordService->importToDb($this->words);
     }
