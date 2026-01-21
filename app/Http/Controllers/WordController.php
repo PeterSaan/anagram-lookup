@@ -143,8 +143,8 @@ class WordController extends Controller
 
         $words = explode("\n", $res->body());
 
-        $maxJobsInBatch = env('QUEUE_WORKERS', 2);
-        $jobs = $wordService->arrayToJobs($words, $maxJobsInBatch);
+        $jobsInBatch = 10;
+        $jobs = $wordService->arrayToJobs($words, $jobsInBatch);
 
         try {
             $batchId = Bus::batch($jobs)

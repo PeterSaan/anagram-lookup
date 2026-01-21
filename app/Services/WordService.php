@@ -11,10 +11,10 @@ class WordService
      * @param  string[]  $words
      * @return ImportWords[]
      */
-    public function arrayToJobs(array $words, int $maxJobsInBatch): array
+    public function arrayToJobs(array $words, int $jobsInBatch): array
     {
         $totalAmountOfWords = count($words);
-        $maxWordsInChunk = ceil($totalAmountOfWords / $maxJobsInBatch);
+        $maxWordsInChunk = ceil($totalAmountOfWords / $jobsInBatch);
 
         $wordChunks = array_filter(
             array_chunk($words, $maxWordsInChunk),

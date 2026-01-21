@@ -19,16 +19,6 @@ class ImportWords implements ShouldQueue
     public function __construct(public array $words) {}
 
     /**
-     * The number of seconds the job can run before timing out.
-     *
-     * @var int
-     */
-    public $timeout = 1000;
-    // The 1000 seconds is based on a single test I did with a
-    // 4-core 8th gen Intel i5 laptop on power-saving mode.
-    // Feel free to change it.
-
-    /**
      * Execute the job.
      *
      * @param  string[]  $words
