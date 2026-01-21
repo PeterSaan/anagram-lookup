@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from 'react';
 
 export default function Import({ isImported }: ImportPageProps) {
   const [batchId, setBatchId] = useState(localStorage.getItem('batchId'));
-  const [isInputDisabled, setIsInputDisabled] = useState(
+  const [inputDisabled, setInputDisabled] = useState(
     isImported || batchId !== null,
   );
   const [importUrl, setImportUrl] = useState('');
@@ -34,7 +34,7 @@ export default function Import({ isImported }: ImportPageProps) {
 
   async function importWords(e: FormEvent) {
     e.preventDefault();
-    setIsInputDisabled(true);
+    setInputDisabled(true);
     setImportResponse('Importing...');
 
     const res = await fetch('/api/import-words', {
@@ -46,7 +46,7 @@ export default function Import({ isImported }: ImportPageProps) {
     const resText = await res.text();
 
     if (!res.ok) {
-      setIsInputDisabled(false);
+      setInputDisabled(false);
       setImportResponse(resText);
       return;
     } else if (res.status === 202) {
@@ -80,13 +80,13 @@ export default function Import({ isImported }: ImportPageProps) {
                   type="url"
                   onChange={(e) => setImportUrl(e.target.value)}
                   required
-                  disabled={isInputDisabled}
+                  disabled={inputDisabled}
                 />
               </label>
               <button
                 className="mx-auto cursor-pointer rounded-2xl border-2 border-gray-100 px-5 py-3 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75 disabled:cursor-not-allowed disabled:border-transparent disabled:bg-gray-500 disabled:text-gray-100/60"
                 type="submit"
-                disabled={isInputDisabled}
+                disabled={inputDisabled}
               >
                 Import
               </button>

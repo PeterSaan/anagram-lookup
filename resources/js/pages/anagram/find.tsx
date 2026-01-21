@@ -4,14 +4,15 @@ import { FormEvent, useState } from 'react';
 
 export default function Find({ isImported }: FindPageProps) {
   const [anagrams, setAnagrams] = useState('');
+  const [searchWord, setSearchWord] = useState('');
   const [loading, setLoading] = useState(false);
   const [responseText, setResponseText] = useState(
     isImported ? '' : 'Import words before searching',
   );
-  const [searchWord, setSearchWord] = useState('');
 
   async function findAnagrams(e: FormEvent) {
     setAnagrams('');
+    setResponseText('Searching...');
     setLoading(true);
     e.preventDefault();
 
@@ -31,9 +32,7 @@ export default function Find({ isImported }: FindPageProps) {
 
     const resAnagrams: string[] = await res.json();
     setAnagrams(resAnagrams.join(', '));
-    setResponseText(
-      `Anagram${resAnagrams.length > 1 ? 's' : ''} for '${searchWord}':`,
-    );
+    setResponseText(`Anagrams for '${searchWord}':`);
     return;
   }
 
@@ -57,13 +56,15 @@ export default function Find({ isImported }: FindPageProps) {
               <label className="flex w-100 flex-col pb-5 text-left text-xl text-gray-500">
                 Searchable word:
                 <input
+                  name="searchWord"
                   className="rounded-full border border-gray-50 px-3 py-2 text-gray-100"
                   type="text"
                   onChange={(e) => setSearchWord(e.target.value)}
+                  disabled={!isImported || loading}
                 />
               </label>
               <button
-                className="mx-auto cursor-pointer rounded-2xl border-2 border-gray-100 px-5 py-3 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75 disabled:cursor-not-allowed disabled:border-none disabled:bg-gray-500 disabled:text-gray-100/60"
+                className="mx-auto cursor-pointer rounded-2xl border-2 border-gray-100 px-5 py-3 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75 disabled:cursor-not-allowed disabled:border-transparent disabled:bg-gray-500 disabled:text-gray-100/60"
                 type="submit"
                 disabled={!isImported || loading}
               >
