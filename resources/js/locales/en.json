@@ -1,0 +1,22 @@
+{
+  "import_words": "Import words",
+  "find_anagram": "Find anagram",
+  "enter_a_url_to_import_from": "Enter a URL to import from",
+  "importing": "Importing...",
+  "words_have_already_been_imported": "Words have already been imported",
+  "import_finished": "Import finished!",
+  "import_progress": "Import progress: {{perc}}",
+  "problem_with_importing_try_again": "Problem with importing. Try again!",
+  "full_url": "Full URL",
+  "import_btn": "Import",
+  "back": "Back",
+  "import_words_before_searching": "Import words before searching",
+  "searchable_word": "Searchable word",
+  "search": "Search",
+  "searching": "Searching...",
+  "invalid_word": "Invalid word",
+  "no_anagram_found_for_that_word": "No anagram found for that word",
+  "anagrams_for": "Anagrams for '{{word}}':",
+  "translate": "Translate",
+  "home": "Home"
+}

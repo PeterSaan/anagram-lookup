@@ -1,18 +1,22 @@
+import FindResponse from '@/components/findResponse';
+import TranslateButton from '@/components/translateButton';
 import { FindPageProps } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { FormEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Find({ isImported }: FindPageProps) {
+  const [t] = useTranslation();
   const [anagrams, setAnagrams] = useState('');
   const [searchWord, setSearchWord] = useState('');
   const [loading, setLoading] = useState(false);
-  const [responseText, setResponseText] = useState(
-    isImported ? '' : 'Import words before searching',
+  const [findStatus, setFindStatus] = useState(
+    isImported ? '' : 'importBefore',
   );
 
   async function findAnagrams(e: FormEvent) {
     setAnagrams('');
-    setResponseText('Searching...');
+    setFindStatus('searching');
     setLoading(true);
     e.preventDefault();
 
@@ -20,11 +24,11 @@ export default function Find({ isImported }: FindPageProps) {
 
     if (res.status === 400) {
       setLoading(false);
-      setResponseText('Invalid word');
+      setFindStatus('invalidWord');
       return;
     } else if (res.status === 204) {
       setLoading(false);
-      setResponseText('No anagram found for that word');
+      setFindStatus('noneFound');
       return;
     }
 
@@ -32,19 +36,24 @@ export default function Find({ isImported }: FindPageProps) {
 
     const resAnagrams: string[] = await res.json();
     setAnagrams(resAnagrams.join(', '));
-    setResponseText(`Anagrams for '${searchWord}':`);
+    setFindStatus(`anagramsFor ${searchWord}`);
     return;
   }
 
   return (
     <>
-      <Head title="Find anagram" />
-      <div className="flex min-h-screen bg-slate-800">
+      <Head title={t('find_anagram')} />
+      <div className="relative flex min-h-screen bg-slate-800">
+        <div className="absolute top-5 right-5">
+          <TranslateButton />
+        </div>
         <div className="grid w-full gap-y-10 text-gray-100">
           <div className="flex h-full flex-col items-center text-4xl font-semibold">
             <div className="my-auto max-w-200 text-center">
-              {responseText !== '' && (
-                <p className="pb-10 text-3xl">{responseText}</p>
+              {findStatus !== '' && (
+                <p className="pb-10 text-3xl">
+                  <FindResponse status={findStatus} />
+                </p>
               )}
               <p>{anagrams}</p>
             </div>
@@ -54,7 +63,7 @@ export default function Find({ isImported }: FindPageProps) {
               onSubmit={findAnagrams}
             >
               <label className="flex w-100 flex-col pb-5 text-left text-xl text-gray-500">
-                Searchable word:
+                {t('searchable_word')}
                 <input
                   name="searchWord"
                   className="rounded-full border border-gray-50 px-3 py-2 text-gray-100"
@@ -68,7 +77,7 @@ export default function Find({ isImported }: FindPageProps) {
                 type="submit"
                 disabled={!isImported || loading}
               >
-                Search
+                {t('search')}
               </button>
             </form>
           </div>
@@ -78,7 +87,7 @@ export default function Find({ isImported }: FindPageProps) {
               className="rounded-2xl border-2 border-gray-100 px-4 py-2 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75"
               viewTransition
             >
-              Back
+              {t('back')}
             </Link>
           </div>
         </div>
