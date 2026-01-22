@@ -19,12 +19,14 @@ export default function ImportResponse({ status }: ImportResponseCompProps) {
     case 'finished':
       response = t('import_finished');
       break;
+    case 'noWords':
+      response = t('no_words_were_found_from_url');
+      break;
     case 'tryAgain':
       response = t('problem_with_importing_try_again');
       break;
     default:
-      const perc = status.split(' ')[1];
-      response = t('import_progress', { perc });
+      response = t('import_progress', { perc: status.split(' ')[1] });
   }
 
   return response;

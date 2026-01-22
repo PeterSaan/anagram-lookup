@@ -18,5 +18,6 @@
   "no_anagram_found_for_that_word": "No anagram found for that word",
   "anagrams_for": "Anagrams for '{{word}}':",
   "translate": "Translate",
-  "home": "Home"
+  "home": "Home",
+  "no_words_were_found_from_url": "No words were found from the URL"
 }

@@ -18,5 +18,6 @@
   "no_anagram_found_for_that_word": "Ei leidnud anagrammi antud sõnale",
   "anagrams_for": "Anagrammid sõnale '{{word}}':",
   "translate": "Tõlgi",
-  "home": "Avaleht"
+  "home": "Avaleht",
+  "no_words_were_found_from_url": "Ei leidnud antud URL-ilt ühtegi sõna"
 }

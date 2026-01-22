@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function TranslateButton() {
-  const [_, i18n] = useTranslation();
+  const [, i18n] = useTranslation();
   const [lang, setLang] = useState(localStorage.getItem('anagram-lang'));
 
   useEffect(() => {

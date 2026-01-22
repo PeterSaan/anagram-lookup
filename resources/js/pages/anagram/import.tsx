@@ -52,7 +52,11 @@ export default function Import({ isImported }: ImportPageProps) {
     });
     const resText = await res.text();
 
-    if (!res.ok) {
+    if (res.status === 404) {
+      setInputDisabled(false);
+      setImportStatus('noWords');
+      return;
+    } else if (!res.ok) {
       setInputDisabled(false);
       setImportStatus('tryAgain');
       return;

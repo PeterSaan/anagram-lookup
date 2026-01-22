@@ -20,8 +20,7 @@ export default function FindResponse({ status }: FindResponseCompProps) {
       response = t('no_anagram_found_for_that_word');
       break;
     default:
-      const searchWord = status.split(' ')[1];
-      response = t('anagrams_for', { word: searchWord });
+      response = t('anagrams_for', { word: status.split(' ')[1] });
   }
 
   return `${response} `;

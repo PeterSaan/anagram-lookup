@@ -116,7 +116,15 @@ class WordController extends Controller
                 description: 'Invalid URL or HTTP client had problems fetching the requested URL',
                 content: new OA\MediaType(
                     mediaType: 'text/html',
-                    example: []
+                    example: 'Empty or invalid URL'
+                ),
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Array of strings parsed from URL is empty',
+                content: new OA\MediaType(
+                    mediaType: 'text/html',
+                    example: 'No words'
                 ),
             ),
             new OA\Response(
@@ -144,6 +152,9 @@ class WordController extends Controller
         }
 
         $words = explode("\n", $res->body());
+        if (! isset($words)) {
+            return response('No words', 404);
+        }
 
         $jobs = $this->wordService->wordArrayToJobs($words);
 

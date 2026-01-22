@@ -155,7 +155,15 @@
                         "description": "Invalid URL or HTTP client had problems fetching the requested URL",
                         "content": {
                             "text/html": {
-                                "example": []
+                                "example": "Empty or invalid URL"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Array of strings parsed from URL is empty",
+                        "content": {
+                            "text/html": {
+                                "example": "No words"
                             }
                         }
                     },
