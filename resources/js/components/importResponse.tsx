@@ -25,6 +25,9 @@ export default function ImportResponse({ status }: ImportResponseCompProps) {
     case 'tryAgain':
       response = t('problem_with_importing_try_again');
       break;
+    case 'batchProblem':
+      response = t('stored_batch_not_found');
+      break;
     default:
       response = t('import_progress', { perc: status.split(' ')[1] });
   }

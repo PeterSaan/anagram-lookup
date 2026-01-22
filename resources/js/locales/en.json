@@ -19,5 +19,6 @@
   "anagrams_for": "Anagrams for '{{word}}':",
   "translate": "Translate",
   "home": "Home",
+  "stored_batch_not_found": "Stored batch not found. Try again!",
   "no_words_were_found_from_url": "No words were found from the URL"
 }

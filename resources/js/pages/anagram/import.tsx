@@ -24,7 +24,7 @@ export default function Import({ isImported }: ImportPageProps) {
       const resText = await res.text();
 
       if (!res.ok) {
-        setImportStatus('enterToImport');
+        setImportStatus('batchProblem');
         setInputDisabled(false);
         localStorage.removeItem('batchId');
         clearInterval(interval);
@@ -56,7 +56,7 @@ export default function Import({ isImported }: ImportPageProps) {
       setInputDisabled(false);
       setImportStatus('noWords');
       return;
-    } else if (!res.ok) {
+    } else if (res.status === 400 || res.status === 500) {
       setInputDisabled(false);
       setImportStatus('tryAgain');
       return;

@@ -19,5 +19,6 @@
   "anagrams_for": "Anagrammid sõnale '{{word}}':",
   "translate": "Tõlgi",
   "home": "Avaleht",
+  "stored_batch_not_found": "Salvestatud partiid ei leitud. Proovi uuesti!",
   "no_words_were_found_from_url": "Ei leidnud antud URL-ilt ühtegi sõna"
 }
