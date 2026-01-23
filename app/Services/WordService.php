@@ -48,7 +48,7 @@ class WordService implements IWordService
         foreach ($words as $word) {
             $wordModel = new Word;
             $wordModel->value = $word;
-            $wordModel->length = strlen($word);
+            $wordModel->length = mb_strlen($word);
             $wordModel->save();
         }
     }
