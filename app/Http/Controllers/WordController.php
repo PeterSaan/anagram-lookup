@@ -45,25 +45,17 @@ class WordController extends Controller
             new OA\Response(
                 response: 204,
                 description: 'Did not find anagrams for given word',
-                content: new OA\MediaType(
-                    mediaType: 'application/json',
-                    example: []
-                ),
             ),
             new OA\Response(
                 response: 400,
                 description: '`word` is empty',
-                content: new OA\MediaType(
-                    mediaType: 'application/json',
-                    example: []
-                ),
             ),
         ]
     )]
     public function find(string $word)
     {
-        if (! $word) {
-            return response([], 400);
+        if (! trim($word)) {
+            return response(status: 400);
         }
 
         $anagramsFromCache = Cache::get($word, '');

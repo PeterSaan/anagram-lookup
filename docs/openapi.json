@@ -97,20 +97,10 @@
                         }
                     },
                     "204": {
-                        "description": "Did not find anagrams for given word",
-                        "content": {
-                            "application/json": {
-                                "example": []
-                            }
-                        }
+                        "description": "Did not find anagrams for given word"
                     },
                     "400": {
-                        "description": "`word` is empty",
-                        "content": {
-                            "application/json": {
-                                "example": []
-                            }
-                        }
+                        "description": "`word` is empty"
                     }
                 }
             }
