@@ -1,3 +1,4 @@
+import Button from '@/components/button';
 import TranslateButton from '@/components/translateButton';
 import { Head, Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
@@ -8,24 +9,16 @@ export default function Welcome() {
   return (
     <>
       <Head title={t('home')} />
-      <div className="relative flex min-h-screen bg-slate-800">
-        <div className="absolute top-5 right-5">
+      <div className="relative flex min-h-screen bg-slate-800 px-3">
+        <div className="absolute top-3 right-3">
           <TranslateButton />
         </div>
-        <div className="inline-flex w-full items-center justify-center gap-20 text-4xl font-semibold text-gray-100">
-          <Link
-            href={'/anagram/import'}
-            className="cursor-pointer rounded-2xl border-2 border-gray-100 px-5 py-3 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75"
-            viewTransition
-          >
-            {t('import_words')}
+        <div className="inline-flex w-full items-center justify-center gap-5 font-semibold text-gray-100 sm:gap-10 md:gap-20">
+          <Link href={'/anagram/import'} viewTransition>
+            <Button text={t('import_words')} size="lg" />
           </Link>
-          <Link
-            href={'/anagram/find'}
-            className="cursor-pointer rounded-2xl border-2 border-gray-100 px-5 py-3 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75"
-            viewTransition
-          >
-            {t('find_anagram')}
+          <Link href={'/anagram/find'} viewTransition>
+            <Button text={t('find_anagram')} size="lg" />
           </Link>
         </div>
       </div>

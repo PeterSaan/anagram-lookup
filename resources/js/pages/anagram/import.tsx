@@ -1,3 +1,4 @@
+import Button from '@/components/button';
 import ImportResponse from '@/components/importResponse';
 import TranslateButton from '@/components/translateButton';
 import { ImportPageProps } from '@/types';
@@ -69,12 +70,12 @@ export default function Import({ isImported }: ImportPageProps) {
   return (
     <>
       <Head title={t('import_words')} />
-      <div className="relative flex min-h-screen bg-slate-800">
-        <div className="absolute top-5 right-5">
+      <div className="relative flex min-h-screen bg-slate-800 px-3">
+        <div className="absolute top-3 right-3">
           <TranslateButton />
         </div>
-        <div className="grid w-full gap-y-10 text-gray-100">
-          <div className="flex h-full flex-col items-center text-4xl font-semibold">
+        <div className="grid w-full gap-y-7 text-gray-100 sm:gap-y-10">
+          <div className="flex h-full flex-col items-center font-semibold">
             <div className="my-auto max-w-200 text-center">
               <p className="pb-10 text-3xl">
                 <ImportResponse status={importStatus} />
@@ -85,7 +86,7 @@ export default function Import({ isImported }: ImportPageProps) {
               method="post"
               onSubmit={importWords}
             >
-              <label className="flex w-100 flex-col pb-5 text-left text-xl text-gray-500">
+              <label className="flex w-80 flex-col pb-5 text-left text-lg text-gray-500 sm:w-100 sm:text-xl">
                 {t('full_url')}
                 <input
                   className="rounded-full border border-gray-50 px-3 py-2 text-gray-100"
@@ -96,22 +97,18 @@ export default function Import({ isImported }: ImportPageProps) {
                   disabled={inputDisabled}
                 />
               </label>
-              <button
-                className="mx-auto cursor-pointer rounded-2xl border-2 border-gray-100 px-5 py-3 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75 disabled:cursor-not-allowed disabled:border-transparent disabled:bg-gray-500 disabled:text-gray-100/60"
-                type="submit"
+              <Button
+                size="lg"
+                type={'submit'}
                 disabled={inputDisabled}
-              >
-                {t('import_btn')}
-              </button>
+                text={t('import_btn')}
+                customStyling="mx-auto"
+              />
             </form>
           </div>
-          <div className="flex items-start justify-center text-2xl">
-            <Link
-              href={'/'}
-              className="rounded-2xl border-2 border-gray-100 px-4 py-2 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75"
-              viewTransition
-            >
-              {t('back')}
+          <div className="flex items-start justify-center">
+            <Link href={'/'} viewTransition>
+              <Button text={t('back')} size="sm" />
             </Link>
           </div>
         </div>

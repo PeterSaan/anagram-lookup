@@ -1,3 +1,4 @@
+import Button from '@/components/button';
 import FindResponse from '@/components/findResponse';
 import TranslateButton from '@/components/translateButton';
 import { FindPageProps } from '@/types';
@@ -43,26 +44,26 @@ export default function Find({ isImported }: FindPageProps) {
   return (
     <>
       <Head title={t('find_anagram')} />
-      <div className="relative flex min-h-screen bg-slate-800">
-        <div className="absolute top-5 right-5">
+      <div className="relative flex min-h-screen bg-slate-800 px-3">
+        <div className="absolute top-3 right-3">
           <TranslateButton />
         </div>
-        <div className="grid w-full gap-y-10 text-gray-100">
-          <div className="flex h-full flex-col items-center text-4xl font-semibold">
+        <div className="grid w-full gap-y-7 text-gray-100 sm:gap-y-10">
+          <div className="flex h-full flex-col items-center font-semibold">
             <div className="my-auto max-w-200 text-center">
               {findStatus !== '' && (
                 <p className="pb-10 text-3xl">
                   <FindResponse status={findStatus} />
                 </p>
               )}
-              <p>{anagrams}</p>
+              <p className='text-4xl'>{anagrams}</p>
             </div>
             <form
               className="flex flex-col"
               method="post"
               onSubmit={findAnagrams}
             >
-              <label className="flex w-100 flex-col pb-5 text-left text-xl text-gray-500">
+              <label className="flex w-80 flex-col pb-5 text-left text-lg text-gray-500 sm:w-100 sm:text-xl">
                 {t('searchable_word')}
                 <input
                   name="searchWord"
@@ -70,24 +71,21 @@ export default function Find({ isImported }: FindPageProps) {
                   type="text"
                   onChange={(e) => setSearchWord(e.target.value)}
                   disabled={!isImported || loading}
+                  required
                 />
               </label>
-              <button
-                className="mx-auto cursor-pointer rounded-2xl border-2 border-gray-100 px-5 py-3 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75 disabled:cursor-not-allowed disabled:border-transparent disabled:bg-gray-500 disabled:text-gray-100/60"
+              <Button
+                size="lg"
                 type="submit"
                 disabled={!isImported || loading}
-              >
-                {t('search')}
-              </button>
+                text={t('search')}
+                customStyling="mx-auto"
+              />
             </form>
           </div>
-          <div className="flex items-start justify-center text-2xl">
-            <Link
-              href={'/'}
-              className="rounded-2xl border-2 border-gray-100 px-4 py-2 hover:border-transparent hover:bg-gray-100 hover:text-slate-800 active:bg-gray-100/75"
-              viewTransition
-            >
-              {t('back')}
+          <div className="flex items-start justify-center">
+            <Link href={'/'} viewTransition>
+              <Button size="sm" text={t('back')} />
             </Link>
           </div>
         </div>
