@@ -1,6 +1,3 @@
-export type FindPageProps = { isImported: boolean };
-export type ImportPageProps = { isImported: boolean };
-
 export type ButtonComponentProps = {
   customStyling?: string;
   disabled?: boolean;

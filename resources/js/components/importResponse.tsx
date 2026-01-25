@@ -7,6 +7,8 @@ export default function ImportResponse({ status }: ImportResponseCompProps) {
   let response: string;
 
   switch (status) {
+    case '':
+      return;
     case 'importing':
       response = t('importing');
       break;
@@ -14,7 +16,7 @@ export default function ImportResponse({ status }: ImportResponseCompProps) {
       response = t('words_have_already_been_imported');
       break;
     case 'enterToImport':
-      response = t('import_words');
+      response = t('enter_a_url_to_import_from');
       break;
     case 'finished':
       response = t('import_finished');

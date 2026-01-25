@@ -88,14 +88,6 @@ class WordController extends Controller
         ],
         responses: [
             new OA\Response(
-                response: 200,
-                description: 'Words have already imported from some URL',
-                content: new OA\MediaType(
-                    mediaType: 'text/html',
-                    example: 'Words have already been imported'
-                ),
-            ),
-            new OA\Response(
                 response: 202,
                 description: 'Import jobs passed to the server, batch id returned',
                 content: new OA\MediaType(
@@ -128,10 +120,6 @@ class WordController extends Controller
     )]
     public function import(Request $req)
     {
-        if (Cache::get('imported')) {
-            return response('Words have already been imported');
-        }
-
         $importUrl = $req->input('url');
         if (! filter_var($importUrl, FILTER_VALIDATE_URL)) {
             return response('Empty or invalid URL', 400);
@@ -152,9 +140,6 @@ class WordController extends Controller
 
         try {
             $batchId = Bus::batch($jobs)
-                ->then(function () {
-                    Cache::set('imported', true);
-                })
                 ->name('Import words')
                 ->onQueue('import')
                 ->dispatch()

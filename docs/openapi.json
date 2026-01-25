@@ -125,14 +125,6 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Words have already imported from some URL",
-                        "content": {
-                            "text/html": {
-                                "example": "Words have already been imported"
-                            }
-                        }
-                    },
                     "202": {
                         "description": "Import jobs passed to the server, batch id returned",
                         "content": {

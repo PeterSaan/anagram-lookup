@@ -64,16 +64,6 @@ class WordControllerTest extends TestCase
         $res->assertNotFound();
     }
 
-    public function test_already_imported_database_returns_ok_status()
-    {
-        Cache::expects('get')->with('imported')->andReturn(true);
-
-        $res = $this->post('/api/import-words', ['url' => 'https://random.com']);
-
-        $res->assertOk();
-        $res->assertSeeText('Words have already been imported');
-    }
-
     public function test_correct_request_returns_accepted_status()
     {
         $res = $this->post('/api/import-words', ['url' => 'https://random.com']);

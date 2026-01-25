@@ -1,21 +1,16 @@
 import Button from '@/components/button';
 import ImportResponse from '@/components/importResponse';
 import TranslateButton from '@/components/translateButton';
-import { ImportPageProps } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function Import({ isImported }: ImportPageProps) {
+export default function Import() {
   const [t] = useTranslation();
   const [batchId, setBatchId] = useState(localStorage.getItem('batchId'));
-  const [inputDisabled, setInputDisabled] = useState(
-    isImported || batchId !== null,
-  );
+  const [inputDisabled, setInputDisabled] = useState(batchId !== null);
   const [importUrl, setImportUrl] = useState('');
-  const [importStatus, setImportStatus] = useState(
-    batchId ? 'importing' : isImported ? 'alreadyImported' : 'enterToImport',
-  );
+  const [importStatus, setImportStatus] = useState(batchId ? 'importing' : 'enterToImport');
 
   useEffect(() => {
     if (!batchId) return;

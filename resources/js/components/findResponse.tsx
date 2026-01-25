@@ -7,8 +7,10 @@ export default function FindResponse({ status }: FindResponseCompProps) {
   let response: string;
 
   switch (status) {
-    case 'importBefore':
-      response = t('import_words_before_searching');
+    case '':
+      return;
+    case 'enterToSearch':
+      response = t('enter_a_word_to_search_for');
       break;
     case 'searching':
       response = t('searching');

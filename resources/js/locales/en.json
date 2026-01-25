@@ -1,7 +1,8 @@
 {
   "import_words": "Import words",
   "find_anagram": "Find anagram",
-  "enter_a_url_to_import_from": "Enter a URL to import from",
+  "enter_a_url_to_import_from": "Enter a URL to import words from",
+  "enter_a_word_to_search_for": "Enter a word to search anagrams for",
   "importing": "Importing...",
   "words_have_already_been_imported": "Words have already been imported",
   "import_finished": "Import finished!",
@@ -10,7 +11,6 @@
   "full_url": "Full URL",
   "import_btn": "Import",
   "back": "Back",
-  "import_words_before_searching": "Import words before searching",
   "searchable_word": "Searchable word",
   "search": "Search",
   "searching": "Searching...",

@@ -1,7 +1,8 @@
 {
   "import_words": "Impordi sõnad",
   "find_anagram": "Anagrammi otsing",
-  "enter_a_url_to_import_from": "Sisesta URL, kust importida",
+  "enter_a_url_to_import_from": "Sisesta URL, kust sõnu importida",
+  "enter_a_word_to_search_for": "Sisesta sõna, millele angramme otsida",
   "importing": "Importimine...",
   "words_have_already_been_imported": "Sõnad on juba importitud",
   "import_finished": "Importimine lõpetatud!",
@@ -10,7 +11,6 @@
   "full_url": "Täispikk URL",
   "import_btn": "Impordi",
   "back": "Tagasi",
-  "import_words_before_searching": "Impordi sõnad enne otsimist",
   "searchable_word": "Otsitav sõna",
   "search": "Otsi",
   "searching": "Otsimine...",

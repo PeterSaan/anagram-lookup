@@ -1,19 +1,16 @@
 import Button from '@/components/button';
 import FindResponse from '@/components/findResponse';
 import TranslateButton from '@/components/translateButton';
-import { FindPageProps } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function Find({ isImported }: FindPageProps) {
+export default function Find() {
   const [t] = useTranslation();
   const [anagrams, setAnagrams] = useState('');
   const [searchWord, setSearchWord] = useState('');
   const [loading, setLoading] = useState(false);
-  const [findStatus, setFindStatus] = useState(
-    isImported ? '' : 'importBefore',
-  );
+  const [findStatus, setFindStatus] = useState('enterToSearch');
 
   async function findAnagrams(e: FormEvent) {
     setAnagrams('');
@@ -70,14 +67,14 @@ export default function Find({ isImported }: FindPageProps) {
                   className="rounded-full border border-gray-50 px-3 py-2 text-gray-100"
                   type="text"
                   onChange={(e) => setSearchWord(e.target.value)}
-                  disabled={!isImported || loading}
+                  disabled={loading}
                   required
                 />
               </label>
               <Button
                 size="lg"
                 type="submit"
-                disabled={!isImported || loading}
+                disabled={loading}
                 text={t('search')}
                 customStyling="mx-auto"
               />
