@@ -53,7 +53,7 @@ export default function Find() {
                   <FindResponse status={findStatus} />
                 </p>
               )}
-              <p className='text-4xl'>{anagrams}</p>
+              <p className="text-4xl">{anagrams}</p>
             </div>
             <form
               className="flex flex-col"

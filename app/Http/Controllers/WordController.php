@@ -88,6 +88,14 @@ class WordController extends Controller
         ],
         responses: [
             new OA\Response(
+                response: 200,
+                description: 'URL is already imported',
+                content: new OA\MediaType(
+                    mediaType: 'text/html',
+                    example: 'That source is already imported'
+                ),
+            ),
+            new OA\Response(
                 response: 202,
                 description: 'Import jobs passed to the server, batch id returned',
                 content: new OA\MediaType(
@@ -125,6 +133,11 @@ class WordController extends Controller
             return response('Empty or invalid URL', 400);
         }
 
+        $importPaths = Cache::get('importPaths', []);
+        if (in_array($importUrl, $importPaths)) {
+            return response('That source is already imported');
+        }
+
         try {
             $res = Http::get($importUrl);
         } catch (Throwable $th) {
@@ -135,6 +148,8 @@ class WordController extends Controller
         if (! isset($words)) {
             return response('No words', 404);
         }
+
+        array_push($importPaths, $importUrl);
 
         $jobs = $this->wordService->wordArrayToJobs($words);
 
@@ -147,6 +162,9 @@ class WordController extends Controller
         } catch (Throwable $th) {
             return response($th->getMessage(), 500);
         }
+
+        Cache::flush();
+        Cache::set('importPaths', $importPaths);
 
         return response($batchId, 202);
     }

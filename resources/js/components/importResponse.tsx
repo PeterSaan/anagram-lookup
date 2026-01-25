@@ -13,7 +13,7 @@ export default function ImportResponse({ status }: ImportResponseCompProps) {
       response = t('importing');
       break;
     case 'alreadyImported':
-      response = t('words_have_already_been_imported');
+      response = t('url_already_imported');
       break;
     case 'enterToImport':
       response = t('enter_a_url_to_import_from');

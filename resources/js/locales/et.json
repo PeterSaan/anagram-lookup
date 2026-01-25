@@ -4,7 +4,7 @@
   "enter_a_url_to_import_from": "Sisesta URL, kust sõnu importida",
   "enter_a_word_to_search_for": "Sisesta sõna, millele angramme otsida",
   "importing": "Importimine...",
-  "words_have_already_been_imported": "Sõnad on juba importitud",
+  "url_already_imported": "Sellelt aadressilt on juba sõnad importitud",
   "import_finished": "Importimine lõpetatud!",
   "import_progress": "Importimisest tehtud: {{perc}}",
   "problem_with_importing_try_again": "Problem importimisega. Proovi uuesti!",

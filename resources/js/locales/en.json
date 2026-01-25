@@ -4,7 +4,7 @@
   "enter_a_url_to_import_from": "Enter a URL to import words from",
   "enter_a_word_to_search_for": "Enter a word to search anagrams for",
   "importing": "Importing...",
-  "words_have_already_been_imported": "Words have already been imported",
+  "url_already_imported": "Words have already been imported from this address",
   "import_finished": "Import finished!",
   "import_progress": "Import progress: {{perc}}",
   "problem_with_importing_try_again": "Problem with importing. Try again!",

@@ -10,7 +10,9 @@ export default function Import() {
   const [batchId, setBatchId] = useState(localStorage.getItem('batchId'));
   const [inputDisabled, setInputDisabled] = useState(batchId !== null);
   const [importUrl, setImportUrl] = useState('');
-  const [importStatus, setImportStatus] = useState(batchId ? 'importing' : 'enterToImport');
+  const [importStatus, setImportStatus] = useState(
+    batchId ? 'importing' : 'enterToImport',
+  );
 
   useEffect(() => {
     if (!batchId) return;
@@ -27,6 +29,7 @@ export default function Import() {
         return;
       } else if (res.status === 201) {
         setImportStatus('finished');
+        setInputDisabled(false);
         localStorage.removeItem('batchId');
         clearInterval(interval);
         return;
@@ -55,6 +58,10 @@ export default function Import() {
     } else if (res.status === 400 || res.status === 500) {
       setInputDisabled(false);
       setImportStatus('tryAgain');
+      return;
+    } else if (res.status === 200) {
+      setInputDisabled(false);
+      setImportStatus('alreadyImported');
       return;
     }
 

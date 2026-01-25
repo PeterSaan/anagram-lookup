@@ -125,6 +125,14 @@
                     }
                 },
                 "responses": {
+                    "200": {
+                        "description": "URL is already imported",
+                        "content": {
+                            "text/html": {
+                                "example": "That source is already imported"
+                            }
+                        }
+                    },
                     "202": {
                         "description": "Import jobs passed to the server, batch id returned",
                         "content": {
