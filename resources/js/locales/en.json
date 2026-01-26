@@ -20,5 +20,6 @@
   "translate": "Translate",
   "home": "Home",
   "stored_batch_not_found": "Stored batch not found. Try again!",
-  "no_words_were_found_from_url": "No words were found from the URL"
+  "no_words_were_found_from_url": "No words were found from the URL",
+  "url_must_be_plain_text_file": "Provided URL must be a plain text file with words separated by newlines"
 }

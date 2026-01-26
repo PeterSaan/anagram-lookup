@@ -128,7 +128,7 @@
                     "200": {
                         "description": "URL is already imported",
                         "content": {
-                            "text/html": {
+                            "text/plain": {
                                 "example": "That source is already imported"
                             }
                         }
@@ -136,7 +136,7 @@
                     "202": {
                         "description": "Import jobs passed to the server, batch id returned",
                         "content": {
-                            "text/html": {
+                            "text/plain": {
                                 "example": "b690bd00-819d-4d18-9151-25ed11b96b83"
                             }
                         }
@@ -144,15 +144,23 @@
                     "400": {
                         "description": "Invalid URL or HTTP client had problems fetching the requested URL",
                         "content": {
-                            "text/html": {
+                            "text/plain": {
                                 "example": "Empty or invalid URL"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Return forbidden if requested URL response does not have `Content-Type: text/plain` header",
+                        "content": {
+                            "text/plain": {
+                                "example": "Only plain text files"
                             }
                         }
                     },
                     "404": {
                         "description": "Array of strings parsed from URL is empty",
                         "content": {
-                            "text/html": {
+                            "text/plain": {
                                 "example": "No words"
                             }
                         }

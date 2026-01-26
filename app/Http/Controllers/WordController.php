@@ -91,7 +91,7 @@ class WordController extends Controller
                 response: 200,
                 description: 'URL is already imported',
                 content: new OA\MediaType(
-                    mediaType: 'text/html',
+                    mediaType: 'text/plain',
                     example: 'That source is already imported'
                 ),
             ),
@@ -99,7 +99,7 @@ class WordController extends Controller
                 response: 202,
                 description: 'Import jobs passed to the server, batch id returned',
                 content: new OA\MediaType(
-                    mediaType: 'text/html',
+                    mediaType: 'text/plain',
                     example: 'b690bd00-819d-4d18-9151-25ed11b96b83'
                 ),
             ),
@@ -107,15 +107,23 @@ class WordController extends Controller
                 response: 400,
                 description: 'Invalid URL or HTTP client had problems fetching the requested URL',
                 content: new OA\MediaType(
-                    mediaType: 'text/html',
+                    mediaType: 'text/plain',
                     example: 'Empty or invalid URL'
+                ),
+            ),
+            new OA\Response(
+                response: 403,
+                description: 'Return forbidden if requested URL response does not have `Content-Type: text/plain` header',
+                content: new OA\MediaType(
+                    mediaType: 'text/plain',
+                    example: 'Only plain text files'
                 ),
             ),
             new OA\Response(
                 response: 404,
                 description: 'Array of strings parsed from URL is empty',
                 content: new OA\MediaType(
-                    mediaType: 'text/html',
+                    mediaType: 'text/plain',
                     example: 'No words'
                 ),
             ),
@@ -130,23 +138,27 @@ class WordController extends Controller
     {
         $importUrl = $req->input('url');
         if (! filter_var($importUrl, FILTER_VALIDATE_URL)) {
-            return response('Empty or invalid URL', 400);
+            return response()->plain('Empty or invalid URL', 400);
         }
 
         $importPaths = Cache::get('importPaths', []);
         if (in_array($importUrl, $importPaths)) {
-            return response('That source is already imported');
+            return response()->plain('That source is already imported');
         }
 
         try {
             $res = Http::get($importUrl);
         } catch (Throwable $th) {
-            return response($th->getMessage(), 400);
+            return response()->plain($th->getMessage(), 400);
+        }
+
+        if (! str_contains($res->header('Content-Type'), 'text/plain')) {
+            return response()->plain('You can only import plain text files', 403);
         }
 
         $words = explode("\n", $res->body());
         if (! isset($words)) {
-            return response('No words', 404);
+            return response()->plain('No words', 404);
         }
 
         array_push($importPaths, $importUrl);
@@ -166,6 +178,6 @@ class WordController extends Controller
         Cache::flush();
         Cache::set('importPaths', $importPaths);
 
-        return response($batchId, 202);
+        return response()->plain($batchId, 202);
     }
 }

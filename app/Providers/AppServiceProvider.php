@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Interfaces\IWordService;
 use App\Services\WordService;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->bind(IWordService::class, WordService::class);
+
+        Response::macro('plain', function (string $content, int $status = 200) {
+            Response::make($content, $status, ['Content-Type' => 'text/plain']);
+        });
     }
 }

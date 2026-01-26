@@ -51,17 +51,20 @@ export default function Import() {
     });
     const resText = await res.text();
 
-    if (res.status === 404) {
+    if (res.status === 200) {
       setInputDisabled(false);
-      setImportStatus('noWords');
+      setImportStatus('alreadyImported');
       return;
     } else if (res.status === 400 || res.status === 500) {
       setInputDisabled(false);
       setImportStatus('tryAgain');
       return;
-    } else if (res.status === 200) {
+    } else if (res.status === 403) {
       setInputDisabled(false);
-      setImportStatus('alreadyImported');
+      setImportStatus('forbiddenUrl');
+    } else if (res.status === 404) {
+      setInputDisabled(false);
+      setImportStatus('noWords');
       return;
     }
 

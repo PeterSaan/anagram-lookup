@@ -20,5 +20,6 @@
   "translate": "Tõlgi",
   "home": "Avaleht",
   "stored_batch_not_found": "Salvestatud partiid ei leitud. Proovi uuesti!",
-  "no_words_were_found_from_url": "Ei leidnud antud URL-ilt ühtegi sõna"
+  "no_words_were_found_from_url": "Ei leidnud antud URL-ilt ühtegi sõna",
+  "url_must_be_plain_text_file": "URL peab olema puhas tekstifail, kus sõnad on eraldatud reavahetustega"
 }

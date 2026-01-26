@@ -27,6 +27,9 @@ export default function ImportResponse({ status }: ImportResponseCompProps) {
     case 'tryAgain':
       response = t('problem_with_importing_try_again');
       break;
+    case 'forbiddenUrl':
+      response = t('url_must_be_plain_text_file');
+      break;
     case 'batchProblem':
       response = t('stored_batch_not_found');
       break;
