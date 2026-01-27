@@ -31,7 +31,7 @@ class WordService implements IWordService
     {
         $searchWordLength = strlen($searchWord);
 
-        $dbWords = Word::all()->where('length', $searchWordLength)->pluck('value');
+        $dbWords = Word::where('length', $searchWordLength)->pluck('value');
         if ($dbWords->isEmpty()) {
             return [];
         }
