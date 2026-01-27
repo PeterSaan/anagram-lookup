@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Interfaces\IWordService;
 use App\Services\WordService;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

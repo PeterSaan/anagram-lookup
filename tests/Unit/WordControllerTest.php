@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Word;
+use Illuminate\Bus\PendingBatch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
@@ -64,10 +66,21 @@ class WordControllerTest extends TestCase
         $res->assertNotFound();
     }
 
-    public function test_correct_request_returns_accepted_status()
+    public function test_non_plain_text_url_returns_forbidden_status()
     {
         $res = $this->post('/api/import-words', ['url' => 'https://random.com']);
 
+        $res->assertForbidden();
+    }
+
+    public function test_correct_request_returns_accepted_status()
+    {
+        Bus::fake();
+        $res = $this->post('/api/import-words', ['url' => 'https://opus.ee/lemmad2013.txt']);
+
+        Bus::assertBatched(function (PendingBatch $batch) {
+            return $batch->name === 'Import words';
+        });
         $res->assertAccepted();
     }
 
