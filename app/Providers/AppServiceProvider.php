@@ -26,9 +26,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->bind(IWordService::class, WordService::class);
-
-        Response::macro('plain', function (string $content, int $status = 200) {
-            Response::make($content, $status, ['Content-Type' => 'text/plain']);
-        });
     }
 }

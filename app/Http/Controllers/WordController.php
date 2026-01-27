@@ -138,27 +138,28 @@ class WordController extends Controller
     {
         $importUrl = $req->input('url');
         if (! filter_var($importUrl, FILTER_VALIDATE_URL)) {
-            return response()->plain('Empty or invalid URL', 400);
+            return response('Empty or invalid URL', 400)->header('Content-Type', 'text/plain');
         }
 
         $importPaths = Cache::get('importPaths', []);
+        echo in_array($importUrl, $importPaths);
         if (in_array($importUrl, $importPaths)) {
-            return response()->plain('That source is already imported');
+            return response('That source is already imported', 200)->header('Content-Type', 'text/plain');
         }
 
         try {
             $res = Http::get($importUrl);
         } catch (Throwable $th) {
-            return response()->plain($th->getMessage(), 400);
+            return response($th->getMessage(), 400)->header('Content-Type', 'text/plain');
         }
 
         if (! str_contains($res->header('Content-Type'), 'text/plain')) {
-            return response()->plain('You can only import plain text files', 403);
+            return response('You can only import plain text files', 403)->header('Content-Type', 'text/plain');
         }
 
         $words = explode("\n", $res->body());
         if (! isset($words)) {
-            return response()->plain('No words', 404);
+            return response('No words', 404)->header('Content-Type', 'text/plain');
         }
 
         array_push($importPaths, $importUrl);
@@ -178,6 +179,6 @@ class WordController extends Controller
         Cache::flush();
         Cache::set('importPaths', $importPaths);
 
-        return response()->plain($batchId, 202);
+        return response($batchId, 202)->header('Content-Type', 'text/plain');
     }
 }
